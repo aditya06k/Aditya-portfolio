@@ -532,33 +532,41 @@ document.head.appendChild(__style);
     return 'Ask me about projects, skills, education, or how to reach me. I keep it direct.';
   };
 
-  async function ask(){
-    const text = input.value.trim();
-    if(!text) return;
+  async function ask() {
+  const text = input.value.trim();
+  if (!text) return;
 
-    addMsg('You', text);
-    input.value = '';
+  addMsg("You", text);
+  input.value = "";
 
-    try {
-      // Try API call
-      const res = await fetch('/api/chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: text })
-      });
+  try {
+    const response = await fetch("/api/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        messages: [
+          { role: "system", content: "You are Aditya, sharp, confident, minimal." },
+          { role: "user", content: text }
+        ]
+      })
+    });
 
-      if(!res.ok) throw new Error('API failed');
+    const data = await response.json();
 
-      const data = await res.json();
-      addMsg('Bot', data.reply);
-
-    } catch(e) {
-      // Fall back to local bot
-      console.log('Using fallback bot:', e);
-      const response = fallbackBot(text);
-      setTimeout(() => addMsg('Bot', response), 300);
+    if (data.reply) {
+      addMsg("Bot", data.reply);
+    } else {
+      addMsg("Bot", "Server issue. Using backup responses.");
+      addMsg("Bot", fallbackBot(text));
     }
+
+  } catch (err) {
+    console.log(err);
+    addMsg("Bot", "Network issue. Using backup.");
+    addMsg("Bot", fallbackBot(text));
   }
+}
+
 
   // UI Event Listeners
   toggle.addEventListener('click', () => {
