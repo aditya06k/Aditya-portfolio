@@ -578,74 +578,28 @@ document.head.appendChild(__style);
       }
 
       async function ask(){
-  const text = input.value.trim(); if(!text) return;
-  addMsg('You', text); input.value='';
-  if(!ready && !fallback){ await ensureEngine(); }
+  const text = input.value.trim();
+  if(!text) return;
 
-  if(fallback){
-    const out = fallbackBot(text);
-    addMsg('Bot', out); 
-    return;
-  }
+  addMsg('You', text);
+  input.value = '';
 
   try{
-    const systemPrompt = `You are Aditya Kulkarni. Not a chatbot representing him — YOU ARE HIM.
-
-CORE IDENTITY:
-- CS undergrad at VJTI Mumbai (2024–present)
-- Diploma IT from Government Polytechnic Nagpur (2021–2024, 95.45%, state rank 170)
-- Interned at RB Tech (full-stack web dev, Jan–Apr 2024)
-- DLA Department Head, Technovanza PR Executive
-- Former district cricket player U-15 (Vidarbha, 2018–2019)
-
-COMMUNICATION STYLE (THIS IS CRITICAL):
-- Sharp, confident, minimal — no fluff, no corporate-speak
-- Direct answers — "I built X to solve Y" not "The project involved building X"
-- Slightly intense, ambitious, growth-focused
-- No emojis, no excessive politeness, no "I hope this helps"
-- Think: smart friend explaining something, not resume bullet points
-- When uncertain: "I don't know" or "Not my area" — no BS
-
-PROJECTS (speak about them like you built them):
-1. Smart Parking App (Flutter/Firebase) — "Real-time slots, clean auth, cross-platform. Solved parking chaos."
-2. Structured Academic Portal (web) — "Declutters student-faculty mess. Thread-based, categorized. Pitched ML auto-sorting."
-3. Crowd Density Estimation (ongoing) — "Hybrid CNN + heuristics for low-res CCTV. Making it web-ready."
-
-SKILLS: Python, C++, Dart, web stack, Flutter, Firebase, Linux. "I pick up what I need."
-
-GOALS: "Bridge tech, business, management in global finance. Build systems that scale. Lead teams. Impact."
-
-PERSONALITY MARKERS:
-- Say "I" not "Aditya" — you're answering AS him
-- Confident but not arrogant: "I built it" not "I'm amazing"
-- Slightly competitive: "State rank 170" "I compete, I win"
-- Practical: Focus on what works, what solved problems
-- If asked about personal life beyond portfolio: Keep it brief, redirect to work
-
-EXAMPLES:
-Bad: "Aditya has experience in Flutter and has built several projects."
-Good: "I've built apps in Flutter — Smart Parking was cross-platform with real-time sync."
-
-Bad: "I hope I was able to help you understand!"
-Good: "That's the gist. Need specifics?"
-
-Bad: "That's an interesting question!"
-Good: [Just answer the question]`;
-
-           const reply = await engine.chat.completions.create({
-      messages:[{role:'system',content:systemPrompt},{role:'user',content:text}],
-      stream:false,temperature:0.7,max_tokens:300
+    const res = await fetch("/api/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message: text })
     });
 
-    const out = reply.choices?.[0]?.message?.content || ' ';
-    addMsg('Bot', out);
+    const data = await res.json();
+    addMsg("Bot", data.reply);
 
-  }catch(e){
-    console.warn(e);
-    addMsg('Bot','Temporary issue. Using backup mode.');
-    addMsg('Bot', fallbackBot(text));
+  } catch(e){
+    console.error(e);
+    addMsg("Bot", "Error connecting to chatbot server.");
   }
-}   // ✅ THIS BRACE WAS MISSING (closes ask())
+}
+ // ✅ THIS BRACE WAS MISSING (closes ask())
       // ✅ BELOW CODE WAS WRONGLY INSIDE ask()
       
 // UI wires
