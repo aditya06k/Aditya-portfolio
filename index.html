@@ -455,179 +455,126 @@ document.head.appendChild(__style);
 
   <!-- ===== Robust loader with graceful fallback (fixes: external script blocked) ===== -->
   <script>
-    (function(){
-      const SLOW_TIMEOUT_MS = 8000; // faster feedback
-      const statusEl = document.getElementById('botStatus');
-      const diagEngine = document.getElementById('diagEngine');
-      const diagFallback = document.getElementById('diagFallback');
-      const diagTests = document.getElementById('diagTests');
+(function(){
+  const panel = document.getElementById('botPanel');
+  const toggle = document.getElementById('botToggle');
+  const input = document.getElementById('botInput');
+  const sendBtn = document.getElementById('botSend');
+  const messages = document.getElementById('botMessages');
 
-      const panel = document.getElementById('botPanel');
-      const toggle = document.getElementById('botToggle');
-      const input = document.getElementById('botInput');
-      const sendBtn = document.getElementById('botSend');
-      const messages = document.getElementById('botMessages');
-
-      let engine = null; let ready = false; let loading = false; let fallback = false;
-
-      function setBadge(text){ statusEl.textContent = text; }
-      function setDiag(){
-        diagEngine.textContent = ready ? 'ready' : (loading ? 'loading' : 'not loaded');
-        diagFallback.textContent = fallback ? 'ON' : 'OFF';
-      }
-      function addMsg(who, text){
-        const div = document.createElement('div');
-        div.className='msg';
-        div.innerHTML = '<b>'+who+':</b> ' + text;
-        messages.appendChild(div);
-        messages.scrollTop = messages.scrollHeight;
-      }
-
-      // ===== Fallback bot (rule-based, resume-aware) =====
-      // ===== Fallback bot (Aditya's voice — sharp, confident, minimal) =====
-      const fallbackBot = (q)=>{
-        const t = q.toLowerCase();
-        
-        // Contact
-        if(t.includes('email') || t.includes('contact')) 
-          return 'abkulkarni_b23@ce.vjti.ac.in — shoot me a mail if you need something.';
-        if(t.includes('linkedin')) 
-          return 'linkedin.com/in/aditya-kulkarni-32219135a/ — feel free to connect.';
-        
-        // Projects
-        if(t.includes('parking')) 
-          return 'Smart Parking — built it in Flutter with Firebase. Real-time slots, auth, cross-platform. Solved a genuine problem.';
-        if(t.includes('communication') || t.includes('portal')) 
-          return 'Structured Academic Portal — declutters student-faculty chaos. Thread-based, categorized. Pitched ML auto-sorting for scale.';
-        if(t.includes('crowd') || t.includes('cctv') || t.includes('density')) 
-          return 'Crowd Density Estimation — ongoing. Hybrid CNN + heuristics for low-res surveillance. Making it web-ready.';
-        if(t.includes('project')) 
-          return 'Three main ones: Smart Parking (Flutter), Academic Portal (web), and Crowd Density (CV + ML). Each solves something real.';
-        
-        // Skills
-        if(t.includes('skill') || t.includes('tech') || t.includes('language')) 
-          return 'Python, C++, Dart for logic. Flutter for mobile, Firebase for backend. Web stack — HTML/CSS/JS. Linux, GitHub, VS Code. I pick up what I need.';
-        
-        // Education
-        if(t.includes('education') || t.includes('vjti') || t.includes('college')) 
-          return 'VJTI Mumbai, B.Tech CSE (2024–present). Before that, Diploma IT from Government Polytechnic Nagpur — 95.45%, state rank 170.';
-        if(t.includes('diploma') || t.includes('nagpur')) 
-          return 'Diploma IT from GPN, Nagpur. 95.45% — state rank 170. Strong foundation in fundamentals.';
-        
-        // Leadership
-        if(t.includes('leadership') || t.includes('extracurricular') || t.includes('society')) 
-          return 'DLA Department Head, Technovanza PR Executive. Previously ISTE Organizer, GPTL Senior Executive. I organize, I speak, I lead.';
-        if(t.includes('debate') || t.includes('dla')) 
-          return 'Head of DLA (Debate & Literary Arts). Won debates at WCL Nagpur. Words matter — I use them well.';
-        
-        // Experience
-        if(t.includes('internship') || t.includes('experience') || t.includes('rb tech')) 
-          return 'Interned at RB Tech — full-stack web dev. HTML/CSS/JS, Bootstrap, PHP. Built responsive apps, integrated backends. Remote, 4 months.';
-        
-        // Personal
-        if(t.includes('cricket')) 
-          return 'Played district cricket U-15 for Vidarbha (2018–2019). Taught me focus, discipline, pressure handling.';
-        if(t.includes('who are you') || t.includes('about you') || t.includes('tell me about')) 
-          return 'CS undergrad at VJTI. I build things — apps, portals, CV systems. I lead teams. I solve problems. Growth-driven, ambitious, analytical.';
-        
-        // Goals/Future
-        if(t.includes('goal') || t.includes('future') || t.includes('plan')) 
-          return 'Bridge tech, business, and management in global finance. Build systems that scale. Lead teams. Make an impact.';
-        
-        // Achievements
-        if(t.includes('achievement') || t.includes('award')) 
-          return 'State-level paper presenter (Blockchain & ML). Debate winner at WCL. State rank 170 in diploma. I compete, I win.';
-        
-        // Default
-        return 'Ask me about projects, skills, education, or how to reach Aditya. I keep it direct.';
-      };    
-
-      async function loadWebLLM(){
-        if(window.webllm){ return window.webllm; }
-        return new Promise((resolve, reject)=>{
-          const s = document.createElement('script');
-          s.src = 'https://unpkg.com/@mlc-ai/web-llm';
-          s.async = true; s.crossOrigin = 'anonymous';
-          s.onload = ()=> resolve(window.webllm||null);
-          s.onerror = ()=> reject(new Error('web-llm failed to load'));
-          document.head.appendChild(s);
-        });
-      }
-
-      async function ensureEngine(){
-        if(ready || loading) return;
-        loading = true; setBadge('Bot: loading…'); addMsg('Bot','Loading on-device model…'); setDiag();
-
-        // Set a timeout to auto-fallback if CDN is blocked
-        const timer = setTimeout(()=>{
-          if(!ready){ fallback = true; setBadge('Bot: fallback'); addMsg('Bot','Using fallback mode (no internet or script blocked).'); setDiag(); }
-        }, SLOW_TIMEOUT_MS);
-
-        try{
-          const webllm = await loadWebLLM();
-          if(!webllm){ throw new Error('webllm not available'); }
-          const config = { model: 'Llama-3.2-1B-Instruct-q4f32_0-MLC' }; // fast + decent
-          engine = await webllm.createEngine(config);
-          ready = true; fallback = false; clearTimeout(timer);
-          setBadge('Bot: ready'); addMsg('Bot','Ready.'); setDiag();
-        }catch(err){
-          fallback = true; clearTimeout(timer);
-          console.warn(err);
-          setBadge('Bot: fallback'); addMsg('Bot','Could not load the on-device model here. Switched to fallback answers.'); setDiag();
-        }
-      }
-
-      async function ask(){
-  const text = input.value.trim();
-  if(!text) return;
-
-  addMsg('You', text);
-  input.value = '';
-
-  try{
-    const res = await fetch("/api/chat", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ message: text })
-    });
-
-    const data = await res.json();
-    addMsg("Bot", data.reply);
-
-  } catch(e){
-    console.error(e);
-    addMsg("Bot", "Error connecting to chatbot server.");
+  function addMsg(who, text){
+    const div = document.createElement('div');
+    div.className = 'msg';
+    div.innerHTML = '<b>' + who + ':</b> ' + text;
+    messages.appendChild(div);
+    messages.scrollTop = messages.scrollHeight;
   }
-}
- // ✅ THIS BRACE WAS MISSING (closes ask())
-      // ✅ BELOW CODE WAS WRONGLY INSIDE ask()
-      
-// UI wires
-toggle.addEventListener('click', ()=>{
-  const show = getComputedStyle(panel).display === 'none';
-  panel.style.display = show ? 'flex' : 'none';
-});
-document.getElementById('botSend').addEventListener('click', ask);
-input.addEventListener('keydown', e=>{
-  if(e.key==='Enter' && !e.shiftKey){
-    e.preventDefault(); 
-    ask();
-  }
-});
 
-// self-tests
-(function runTests(){
-  try{
-    console.assert(typeof addMsg === 'function','addMsg exists');
-    const fb = fallbackBot('what are your skills?');
-    console.assert(/Python|C\+\+/.test(fb),'fallback skills response ok');
-    diagTests.textContent = 'passed basic UI + fallback tests';
-  }catch(e){ diagTests.textContent = 'tests failed'; }
+  // Fallback bot (Aditya's voice)
+  const fallbackBot = (q) => {
+    const t = q.toLowerCase();
+
+    // Contact
+    if(t.includes('email') || t.includes('contact'))
+      return 'abkulkarni_b23@ce.vjti.ac.in — shoot me a mail if you need something.';
+    if(t.includes('linkedin'))
+      return 'linkedin.com/in/aditya-kulkarni-32219135a/ — feel free to connect.';
+
+    // Projects
+    if(t.includes('parking'))
+      return 'Smart Parking — built it in Flutter with Firebase. Real-time slots, auth, cross-platform. Solved a genuine problem.';
+    if(t.includes('communication') || t.includes('portal'))
+      return 'Structured Academic Portal — declutters student-faculty chaos. Thread-based, categorized. Pitched ML auto-sorting for scale.';
+    if(t.includes('crowd') || t.includes('cctv') || t.includes('density'))
+      return 'Crowd Density Estimation — ongoing. Hybrid CNN + heuristics for low-res surveillance. Making it web-ready.';
+    if(t.includes('project'))
+      return 'Three main ones: Smart Parking (Flutter), Academic Portal (web), and Crowd Density (CV + ML). Each solves something real.';
+
+    // Skills
+    if(t.includes('skill') || t.includes('tech') || t.includes('language'))
+      return 'Python, C++, Dart for logic. Flutter for mobile, Firebase for backend. Web stack — HTML/CSS/JS. Linux, GitHub, VS Code. I pick up what I need.';
+
+    // Education
+    if(t.includes('education') || t.includes('vjti') || t.includes('college'))
+      return 'VJTI Mumbai, B.Tech CSE (2024–present). Before that, Diploma IT from Government Polytechnic Nagpur — 95.45%, state rank 170.';
+    if(t.includes('diploma') || t.includes('nagpur'))
+      return 'Diploma IT from GPN, Nagpur. 95.45% — state rank 170. Strong foundation in fundamentals.';
+
+    // Leadership
+    if(t.includes('leadership') || t.includes('extracurricular') || t.includes('society'))
+      return 'DLA Department Head, Technovanza PR Executive. Previously ISTE Organizer, GPTL Senior Executive. I organize, I speak, I lead.';
+    if(t.includes('debate') || t.includes('dla'))
+      return 'Head of DLA (Debate & Literary Arts). Won debates at WCL Nagpur. Words matter — I use them well.';
+
+    // Experience
+    if(t.includes('internship') || t.includes('experience') || t.includes('rb tech'))
+      return 'Interned at RB Tech — full-stack web dev. HTML/CSS/JS, Bootstrap, PHP. Built responsive apps, integrated backends. Remote, 4 months.';
+
+    // Personal
+    if(t.includes('cricket'))
+      return 'Played district cricket U-15 for Vidarbha (2018–2019). Taught me focus, discipline, pressure handling.';
+    if(t.includes('who are you') || t.includes('about you') || t.includes('tell me about'))
+      return 'CS undergrad at VJTI. I build things — apps, portals, CV systems. I lead teams. I solve problems. Growth-driven, ambitious, analytical.';
+
+    // Goals/Future
+    if(t.includes('goal') || t.includes('future') || t.includes('plan'))
+      return 'Bridge tech, business, and management in global finance. Build systems that scale. Lead teams. Make an impact.';
+
+    // Achievements
+    if(t.includes('achievement') || t.includes('award'))
+      return 'State-level paper presenter (Blockchain & ML). Debate winner at WCL. State rank 170 in diploma. I compete, I win.';
+
+    // CV/Resume
+    if(t.includes('cv') || t.includes('resume'))
+      return 'CS student at VJTI. Built Smart Parking (Flutter), Academic Portal (web), Crowd Density system (CV). Python, C++, Dart, web dev. DLA Head, Technovanza PR. State rank 170 in diploma. Email me for full details.';
+
+    // Default
+    return 'Ask me about projects, skills, education, or how to reach me. I keep it direct.';
+  };
+
+  async function ask(){
+    const text = input.value.trim();
+    if(!text) return;
+
+    addMsg('You', text);
+    input.value = '';
+
+    try {
+      // Try API call
+      const res = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: text })
+      });
+
+      if(!res.ok) throw new Error('API failed');
+
+      const data = await res.json();
+      addMsg('Bot', data.reply);
+
+    } catch(e) {
+      // Fall back to local bot
+      console.log('Using fallback bot:', e);
+      const response = fallbackBot(text);
+      setTimeout(() => addMsg('Bot', response), 300);
+    }
+  }
+
+  // UI Event Listeners
+  toggle.addEventListener('click', () => {
+    const isHidden = getComputedStyle(panel).display === 'none';
+    panel.style.display = isHidden ? 'flex' : 'none';
+  });
+
+  sendBtn.addEventListener('click', ask);
+
+  input.addEventListener('keydown', e => {
+    if(e.key === 'Enter' && !e.shiftKey){
+      e.preventDefault();
+      ask();
+    }
+  });
 })();
-
-// Preload
-ensureEngine();
-    })();
-  </script>
+</script>
 </body>
 </html>
