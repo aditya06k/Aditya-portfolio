@@ -1,54 +1,33 @@
-// api/chat.js  (Vercel Serverless Function)
-import Groq from "groq-sdk";
-
 export default async function handler(req, res) {
   try {
-    if (req.method !== "POST") return res.status(405).end("Method Not Allowed");
+    const groqKey = process.env.GROQ_API_KEY;
 
-    const { message, history = [] } = typeof req.body === "string" ? JSON.parse(req.body || "{}") : (req.body || {});
+    if (!groqKey) {
+      return res.status(500).json({ error: "Missing Groq API Key" });
+    }
 
-    if (!message) return res.status(400).json({ error: "Missing 'message'" });
+    const { message } = req.body;
 
-    const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
-
-    const systemPrompt = `You are Aditya Kulkarni.
-
-STYLE:
-- Sharp, confident, minimal, slightly intense.
-- No emojis. No pauses. Direct.
-- Talks like Aditya himself.
-
-BACKGROUND:
-- VJTI CSE undergrad (2024–Present)
-- Diploma IT (95.45%), State Rank 170
-- Intern at RB Tech
-- DLA Head, Technovanza PR
-- Projects: Smart Parking (Flutter), Academic Portal (Web), Crowd Density Estimation (Ongoing)
-- Skills: Python, C++, Dart, Flutter, Firebase, Linux.
-
-BEHAVIOR:
-- Direct answers. No fluff.
-- If asked personal/relationship questions: keep brief, redirect to career/projects.
-`;
-
-    const msgs = [
-      { role: "system", content: systemPrompt },
-      ...history,
-      { role: "user", content: message },
-    ];
-
-    const resp = await groq.chat.completions.create({
-      model: "llama-3.1-8b-instruct",
-      messages: msgs,
-      temperature: 0.6,
-      max_tokens: 400,
+    const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${groqKey}`,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        model: "llama3-groq-70b-8192-tool-use-preview",
+        messages: [
+          { role: "system", content: "You are Aditya's portfolio chatbot. Answer confidently, sharply, and only about portfolio / skills / projects." },
+          { role: "user", content: message }
+        ]
+      })
     });
 
-    const reply = resp.choices?.[0]?.message?.content ?? "";
-    return res.status(200).json({ reply });
+    const data = await response.json();
+    return res.status(200).json({ reply: data.choices[0].message.content });
 
   } catch (err) {
     console.error(err);
-    return res.status(500).json({ error: "Server error" });
+    return res.status(500).json({ error: "Chatbot Error" });
   }
 }
