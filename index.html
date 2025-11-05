@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aditya Kulkarni — Portfolio</title>
+  <style>
+    /* ===== Wikipedia-like base ===== */
+    :root{--border:#a2a9b1;--bg:#f8f9fa;--link:#0645ad;--muted:#e9ecef;--text:#202122}
+    html,body{height:100%}
+    body{font-family:Georgia,"Times New Roman",serif;background:var(--bg);color:var(--text);margin:0;line-height:1.6}
+    a{color:var(--link);text-decoration:none}
+    a:hover{text-decoration:underline}
+
+    /* Layout */
+    /* sidebar removed */
+    #content{max-width:900px;margin:0 auto;padding:20px;background:#fff;border-left:1px solid var(--border);border-right:1px solid var(--border);position:relative; }
+    #navbar{background:#f5f5f5;border-bottom:1px solid var(--border);padding:10px}
+    h1,h2{border-bottom:1px solid var(--border);padding-bottom:4px;font-weight:400;margin-top:0}
+    ul{margin-top:5px}
+    .section{margin:30px 0}
+    .header-box{border:1px solid var(--border);padding:10px;background:#f5f5f5}
+
+    /* Infobox */
+    .infobox{
+  position:absolute;
+  right:-300px;       /* pushes it outside the main content column */
+  top:40px;          /* aligns with your name heading */
+  width:260px;
+  font-size:14px;
+  border:1px solid var(--border);
+  background:var(--bg);
+  border-collapse:collapse;
+}
+
+
+
+
+    /* Chatbot */
+    .chatbot-toggle{position:fixed;right:18px;bottom:18px;border:1px solid var(--border);background:var(--bg);padding:10px 14px;cursor:pointer;font-family:inherit;border-radius:4px}
+    .chatbot-panel{position:fixed;right:18px;bottom:70px;width:320px;max-height:60vh;background:#fff;border:1px solid var(--border);box-shadow:0 2px 8px rgba(0,0,0,.1);display:none;flex-direction:column}
+    .chatbot-header{background:var(--muted);border-bottom:1px solid var(--border);padding:8px 10px}
+    .chatbot-messages{padding:10px;overflow:auto;height:300px}
+    .chatbot-input{display:flex;border-top:1px solid var(--border)}
+    .chatbot-input textarea{flex:1;border:0;padding:8px;resize:none;font-family:inherit}
+    .chatbot-input button{border-left:1px solid var(--border);background:#f5f5f5;padding:0 12px;cursor:pointer}
+    .msg{margin-bottom:10px}
+    .msg b{font-weight:600}
+
+    /* Diagnostics badge */
+    .badge{display:inline-block;padding:2px 6px;border:1px solid var(--border);background:#fff;margin-left:6px;font-size:12px}
+
+    @media (max-width: 900px){
+      #sidebar{position:static;width:auto;height:auto;border-right:0}
+      #content{margin:0}
+      .infobox{float:none;margin:10px 0}
+    }
+    /* Fun Cartography styles */
+    #fun-cartography{padding:0;border:1px solid var(--border)}
+    #fun-cartography h2{border:0}
+    #globe-wrapper{position:relative}
+    .glow{position:absolute;inset:0;pointer-events:none}
+    .fc-card{position:absolute;max-width:260px;border:1px solid var(--border);background:#0b0b0b;color:#f1e6d0;padding:10px;border-radius:8px;filter:drop-shadow(0 2px 8px rgba(0,0,0,.35));font-family:Georgia,serif}
+    .fc-card h4{margin:0 0 4px 0;font-weight:600}
+    </style>
+</head>
+<body>
+  <!-- Left navigation (Wikipedia style) -->
+  
+
+  <!-- Top nav -->
+  <div id="navbar">
+    <a href="#education">Education</a> |
+    <a href="#coursework">Coursework</a> |
+    <a href="#experience">Experience</a> |
+    <a href="#projects">Projects</a> |
+    <a href="#skills">Skills</a> |
+    <a href="#leadership">Leadership</a> |
+    <a href="#achievements">Achievements</a>
+  </div>
+
+  <main id="content">
+    <h1>Aditya Kulkarni </h1>
+
+    <!-- Wikipedia-like infobox -->
+    <table class="infobox" role="table" aria-label="Profile infobox">
+      <tr><th>Aditya Kulkarni</th></tr>
+      <tr>
+  <td style="text-align:center; padding:6px;">
+    <img src="Aditya_portfolio.jpg" alt="Aditya Kulkarni" style="width:180px; border-radius:6px;">
+  </td>
+</tr>
+
+      <tr><td><strong>Field:</strong> Computer Science</td></tr>
+      <tr><td><strong>Location:</strong> Mumbai, India</td></tr>
+      <tr><td><strong>Email:</strong><br><a href="mailto:abkulkarni_b23@ce.vjti.ac.in">abkulkarni_b23@ce.vjti.ac.in</a></td></tr>
+      <tr><td><strong>LinkedIn:</strong><br><a href="https://linkedin.com/in/aditya-kulkarni-32219135a/">Profile</a></td></tr>
+    </table>
+
+    <div class="header-box">
+      <p><strong>Computer Science Undergraduate</strong> — Bridging Technology, Business, and Management in Global Finance</p>
+      <p>Mumbai, India<br>
+        <strong>Email:</strong> <a href="mailto:abkulkarni_b23@ce.vjti.ac.in">abkulkarni_b23@ce.vjti.ac.in</a><br>
+        <strong>LinkedIn:</strong> <a href="https://linkedin.com/in/aditya-kulkarni-32219135a/">linkedin.com/in/aditya-kulkarni-32219135a/</a>
+      </p>
+    </div>
+
+    <!-- ===== LIGHTWEIGHT FUN CARTOGRAPHY GLOBE SECTION (enhanced) ===== -->
+<!-- ===== LIGHTWEIGHT FUN CARTOGRAPHY (Option B — no external libs) ===== -->
+<section class="section" id="fun-cartography">
+  <h2 style="text-align:center;background:#000;color:#f5f5f5;padding:20px 0;border:0;font-style:italic;"> Cartography — A Celestial Map of My Journey</h2>
+    <div style="display:flex;justify-content:center;align-items:center;padding:20px 0;background:#111;">
+  <div id="globe-wrapper" style="width:100%;height:450px;background:#000;border:1px solid #222;position:relative;overflow:hidden;">
+    <canvas id="globeCanvas" style="display:block;width:100%;height:100%;"></canvas>
+    <div id="card-intern" class="fc-card">
+  <svg class="card-arrow" width="2" height="40" style="position:absolute;bottom:-40px;left:50%;transform:translateX(-50%);">
+    <line x1="1" y1="0" x2="1" y2="35" stroke="#c6a86b" stroke-width="2"/>
+    <circle cx="1" cy="38" r="3" fill="#c6a86b"/>
+  </svg>
+  <h4>RB Tech Internship</h4>
+  <div>Full-stack web • 2024</div>
+</div>
+
+<div id="card-diploma" class="fc-card">
+  <svg class="card-arrow" width="2" height="40" style="position:absolute;bottom:-40px;left:50%;transform:translateX(-50%);">
+    <line x1="1" y1="0" x2="1" y2="35" stroke="#c6a86b" stroke-width="2"/>
+    <circle cx="1" cy="38" r="3" fill="#c6a86b"/>
+  </svg>
+  <h4>Diploma — GPN</h4>
+  <div>Government Polytechnic Nagpur</div>
+</div>
+
+<div id="card-vjti" class="fc-card">
+  <svg class="card-arrow" width="2" height="40" style="position:absolute;bottom:-40px;left:50%;transform:translateX(-50%);">
+    <line x1="1" y1="0" x2="1" y2="35" stroke="#c6a86b" stroke-width="2"/>
+    <circle cx="1" cy="38" r="3" fill="#c6a86b"/>
+  </svg>
+  <h4>VJTI B.Tech CSE</h4>
+  <div>2024 — Present</div>
+</div>
+
+<div id="card-cricket" class="fc-card">
+  <svg class="card-arrow" width="2" height="40" style="position:absolute;bottom:-40px;left:50%;transform:translateX(-50%);">
+    <line x1="1" y1="0" x2="1" y2="35" stroke="#c6a86b" stroke-width="2"/>
+    <circle cx="1" cy="38" r="3" fill="#c6a86b"/>
+  </svg>
+  <h4>District Cricket U-15</h4>
+  <div>2018 — 2019</div>
+</div>
+    </div>
+  </div>
+
+  <!-- Timeline under the globe -->
+  <div id="fc-timeline" style="background:#070707;color:#e8e6e3;padding:18px 16px;border-top:1px solid #222;">
+    <div style="max-width:760px;margin:0 auto;">
+      <div class="fc-line" style="position:relative;height:2px;background:#2a2a2a;margin:14px 0 22px 0;">
+        <span class="fc-dot" id="dot-cricket" style="position:absolute;left:5%;top:-5px;width:12px;height:12px;border-radius:50%;background:#c6a86b;box-shadow:0 0 8px rgba(198,168,107,.6);"></span>
+        <span class="fc-dot" id="dot-diploma" style="position:absolute;left:38%;top:-5px;width:12px;height:12px;border-radius:50%;background:#c6a86b;box-shadow:0 0 8px rgba(198,168,107,.6);"></span>
+        <span class="fc-dot" id="dot-intern" style="position:absolute;left:62%;top:-5px;width:12px;height:12px;border-radius:50%;background:#c6a86b;box-shadow:0 0 8px rgba(198,168,107,.6);"></span>
+        <span class="fc-dot" id="dot-vjti" style="position:absolute;left:90%;top:-5px;width:12px;height:12px;border-radius:50%;background:#c6a86b;box-shadow:0 0 8px rgba(198,168,107,.6);"></span>
+        <div class="fc-scan" id="fcScan" style="position:absolute;left:-10%;top:-6px;width:10%;height:14px;background:linear-gradient(90deg, rgba(198,168,107,0) 0%, rgba(198,168,107,.25) 50%, rgba(198,168,107,0) 100%);animation:scan 6s linear infinite;"></div>
+      </div>
+      <div class="fc-txt" style="display:flex;justify-content:space-between;font-size:14px;opacity:.95">
+        <div id="lbl-cricket">2018–2019<br><b>District Cricket U‑15</b></div>
+        <div id="lbl-diploma">2021–2024<br><b>Diploma — GPN</b></div>
+        <div id="lbl-intern">2024<br><b>Intern — RB Tech</b></div>
+        <div id="lbl-vjti">2024–Present<br><b>VJTI CSE</b></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .label-card{max-width:240px;border:1px solid #a2a9b1;background:#0b0b0b;color:#f1e6d0;padding:10px 12px;border-radius:10px;filter:drop-shadow(0 2px 8px rgba(0,0,0,.35));font-family:Georgia,serif;opacity:.95}
+  .label-card h4{margin:0 0 4px 0;font-weight:600;font-size:15px}
+</style>
+
+<script>
+(function(){
+  // ===== Lightweight Globe (Option B — fixed, self‑contained) =====
+  const wrap   = document.getElementById('globe-wrapper');
+  const canvas = document.getElementById('globeCanvas');
+  const ctx    = canvas.getContext('2d');
+
+  // cards
+  const cardIntern  = document.getElementById('card-intern');
+  const cardDiploma = document.getElementById('card-diploma');
+  const cardVJTI    = document.getElementById('card-vjti');
+  const cardCricket = document.getElementById('card-cricket');
+
+  const DPR = Math.max(1, Math.min(window.devicePixelRatio||1, 2));
+
+  // camera / motion
+ let yaw = 0.6, pitch = 0.2;           // radians
+let zoom = 3.2;                        // increased for better framing
+  const fov = 420;                       // perspective factor
+  let dragging=false, lastX=0, lastY=0, autoRotate=true;
+
+  // base sphere scale
+  const BASE_R = 100; //model radius units (increased for better visibility)
+  let SCALE = 1;     // computed per frame based on viewport
+
+  // listeners
+  wrap.addEventListener('mousedown', e=>{ dragging=true; lastX=e.clientX; lastY=e.clientY; autoRotate=false; });
+  window.addEventListener('mouseup',  ()=>{ dragging=false; autoRotate=true; });
+  window.addEventListener('mousemove', e=>{
+    if(!dragging) return;
+    const dx=e.clientX-lastX, dy=e.clientY-lastY; lastX=e.clientX; lastY=e.clientY;
+    yaw += dx*0.005;  
+    pitch += dy*0.005;
+    const LIM=Math.PI/2-0.01; pitch=Math.max(-LIM, Math.min(LIM, pitch));
+  });
+  // No wheel zoom per request
+
+  // sizing
+  function fit(){
+    const r = wrap.getBoundingClientRect();
+    canvas.width  = Math.floor(r.width * DPR);
+    canvas.height = Math.floor(r.height* DPR);
+    canvas.style.width  = r.width + 'px';
+    canvas.style.height = r.height+ 'px';
+    ctx.setTransform(DPR,0,0,DPR,0,0);
+  }
+  window.addEventListener('resize', ()=>{ fit(); buildStars(); });
+  fit();
+
+  // helpers
+  function rotX(p,a){ const s=Math.sin(a), c=Math.cos(a); return [ p[0], c*p[1]-s*p[2], s*p[1]+c*p[2] ]; }
+  function rotY(p,a){ const s=Math.sin(a), c=Math.cos(a); return [  c*p[0]+s*p[2], p[1], -s*p[0]+c*p[2] ]; }
+  function project(p){
+    const px=p[0]*SCALE, py=p[1]*SCALE, pz=p[2]*SCALE;
+    const d = zoom + pz; const k = fov / d;
+    return [ (W/2)+px*k, (H/2)-py*k, d ]; // return x,y,depth
+  }
+  function latLon(lat,lon,r){
+    const phi=(90-lat)*Math.PI/180, th=(lon+180)*Math.PI/180;
+    return [ -r*Math.sin(phi)*Math.cos(th), r*Math.cos(phi), r*Math.sin(phi)*Math.sin(th) ];
+  }
+
+  // build sphere rings (recomputed when SCALE changes significantly)
+  const meridians=[], latitudes=[];
+  function buildSphere(){
+    meridians.length=0; latitudes.length=0;
+    for(let i=0;i<12;i++){ const a=i*Math.PI*2/12; const ring=[]; for(let t=-Math.PI/2;t<=Math.PI/2;t+=0.05){ ring.push([BASE_R*Math.cos(t)*Math.cos(a), BASE_R*Math.sin(t), BASE_R*Math.cos(t)*Math.sin(a)]);} meridians.push(ring); }
+    for(let j=-60;j<=60;j+=30){ const lat=j*Math.PI/180; const ring=[]; for(let a=0;a<Math.PI*2;a+=0.05){ ring.push([BASE_R*Math.cos(lat)*Math.cos(a), BASE_R*Math.sin(lat), BASE_R*Math.cos(lat)*Math.sin(a)]);} latitudes.push(ring); }
+  }
+  buildSphere();
+
+  // pins (Jia gold aesthetic, your locations)
+  // pins (Jia gold aesthetic, your locations with offsets to prevent overlap)
+  const pinIntern  = latLon(21.15,79.09,BASE_R*1.01); // RB Tech — Nagpur
+  const pinDiploma = latLon(21.15,79.09,BASE_R*1.01); // GPN — Nagpur
+  const pinVJTI    = latLon(19.02,72.84,BASE_R*1.01); // VJTI — Mumbai
+  const pinCricket = latLon(20.70,77.00,BASE_R*1.01); // Vidarbha region
+
+  // Card offsets to prevent overlap (in pixels)
+  const cardOffsets = {
+    intern:  { x: 60, y: -80 },
+    diploma: { x: -60, y: 60 },
+    vjti:    { x: 80, y: -20 },
+    cricket: { x: -80, y: -60 }
+  };
+
+  // timeline highlight
+  function highlightTimeline(id){
+    ['dot-cricket','dot-diploma','dot-intern','dot-vjti'].forEach(d=>{ const el=document.getElementById(d); if(el){ el.style.transform='scale(1)'; el.style.boxShadow='0 0 8px rgba(198,168,107,.6)'; }});
+    const el=document.getElementById(id); if(el){ el.style.transform='scale(1.5)'; el.style.boxShadow='0 0 18px rgba(198,168,107,.95)'; }
+    const scan=document.getElementById('fcScan'); if(scan){ const map={'dot-cricket':'5%','dot-diploma':'38%','dot-intern':'62%','dot-vjti':'90%'}; scan.style.animation='none'; scan.style.left=map[id]||'62%'; setTimeout(()=>scan.style.animation='scan 6s linear infinite',120); }
+  }
+  cardIntern.addEventListener('click', ()=> highlightTimeline('dot-intern'));
+  cardDiploma.addEventListener('click', ()=> highlightTimeline('dot-diploma'));
+  cardVJTI.addEventListener('click',    ()=> highlightTimeline('dot-vjti'));
+  cardCricket.addEventListener('click', ()=> highlightTimeline('dot-cricket'));
+
+  // stars
+  let W=0,H=0,t=0, stars=[];
+  function buildStars(){ const r=wrap.getBoundingClientRect(); const count=Math.max(80, Math.floor((r.width*r.height)/9000)); stars=Array.from({length:count},()=>({x:Math.random(),y:Math.random(),a:0.6+0.4*Math.random(),r:0.5+Math.random()*1.2})); }
+  buildStars();
+
+  // drawing helpers
+  function drawRing(points){
+    let first=true; ctx.beginPath();
+    for(const P of points){
+      const p=rotY(rotX(P,pitch),yaw); const pr=project(p);
+      if(pr[2] < 0.6){ first=true; continue; } // clip near/back -> no streaks
+      if(first){ ctx.moveTo(pr[0],pr[1]); first=false; } else ctx.lineTo(pr[0],pr[1]);
+    }
+    ctx.stroke();
+  }
+  function placeCard(cardEl, rp, pr, offsetKey){
+    const front = rp[2] > 0;
+    const offset = cardOffsets[offsetKey] || { x: 0, y: 0 };
+    cardEl.style.left = (pr[0] + offset.x) + 'px';
+    cardEl.style.top = (pr[1] + offset.y) + 'px';
+    cardEl.style.opacity = front ? 0.98 : 0.15;
+    cardEl.style.pointerEvents = front ? 'auto' : 'none';
+    
+    // Update arrow visibility and position
+    const arrow = cardEl.querySelector('.card-arrow');
+    if(arrow){
+      arrow.style.opacity = front ? 0.9 : 0.2;
+      // Rotate arrow to point toward pin
+      const dx = -offset.x;
+      const dy = -offset.y;
+      const angle = Math.atan2(dy, dx) * 180 / Math.PI + 90;
+      arrow.style.transform = `translateX(-50%) rotate(${angle}deg)`;
+    }
+  }
+
+  function draw(){
+    const r = wrap.getBoundingClientRect(); W=r.width; H=r.height;
+    SCALE = Math.min(W,H)/3.5 / BASE_R; // adjusted scale for better fit
+
+    ctx.clearRect(0,0,W,H);
+    ctx.fillStyle='#000'; ctx.fillRect(0,0,W,H);
+
+    // stars
+    for(const s of stars){ const sx=s.x*W, sy=s.y*H; ctx.globalAlpha=s.a*(0.8+0.2*Math.sin(t*0.02+sx*0.01)); ctx.beginPath(); ctx.arc(sx,sy,s.r,0,Math.PI*2); ctx.fillStyle='#c6a86b'; ctx.fill(); }
+    ctx.globalAlpha=1;
+
+    // glow
+    const Rv = BASE_R*SCALE; const rg=ctx.createRadialGradient(W/2,H/2,Rv*0.5,W/2,H/2,Rv*0.95);
+    const pulse=0.10+0.02*Math.sin(t*0.04); rg.addColorStop(0,`rgba(198,168,107,${pulse})`); rg.addColorStop(1,'rgba(198,168,107,0)');
+    ctx.fillStyle=rg; ctx.beginPath(); ctx.arc(W/2,H/2,Rv*1.05,0,Math.PI*2); ctx.fill();
+
+    ctx.strokeStyle='rgba(198,168,107,0.75)'; ctx.lineWidth=1;
+    meridians.forEach(drawRing); latitudes.forEach(drawRing);
+
+    // pins + cards
+   // pins + cards with arrows
+    let rp = rotY(rotX(pinIntern,pitch),yaw); let pr = project(rp);
+    ctx.fillStyle = `rgba(198,168,107,${0.6*(rp[2]>0)+0.2})`; ctx.beginPath(); ctx.arc(pr[0], pr[1], 4, 0, Math.PI*2); ctx.fill();
+    placeCard(cardIntern, rp, pr, 'intern');
+
+    rp = rotY(rotX(pinDiploma,pitch),yaw); pr = project(rp); 
+    ctx.beginPath(); ctx.arc(pr[0], pr[1], 4, 0, Math.PI*2); ctx.fill(); 
+    placeCard(cardDiploma, rp, pr, 'diploma');
+    
+    rp = rotY(rotX(pinVJTI,pitch),yaw);    pr = project(rp); 
+    ctx.beginPath(); ctx.arc(pr[0], pr[1], 4, 0, Math.PI*2); ctx.fill(); 
+    placeCard(cardVJTI, rp, pr, 'vjti');
+    
+    rp = rotY(rotX(pinCricket,pitch),yaw); pr = project(rp); 
+    ctx.beginPath(); ctx.arc(pr[0], pr[1], 4, 0, Math.PI*2); ctx.fill(); 
+    placeCard(cardCricket, rp, pr, 'cricket');
+
+    t+=1;
+  }
+
+  function animate(){ if(autoRotate) yaw += 0.003; draw(); requestAnimationFrame(animate); }
+  animate();
+})();
+
+// keyframes for scan bar (kept)
+const __style = document.createElement('style');
+__style.textContent='@keyframes scan{0%{left:-10%;}100%{left:110%;}}';
+document.head.appendChild(__style);
+</script>
+
+    <section class="section" id="education">
+      <h2>Education</h2>
+      <ul>
+        <li><strong><a href="https://www.google.com/search?q=VJTI+Mumbai">Veermata Jijabai Technological Institute (VJTI)</a></strong>, Mumbai (2024–Present)<br>
+          B.Tech. in Computer Science</li>
+        <li><strong><a href="https://www.google.com/search?q=Government+Polytechnic+Nagpur">Government Polytechnic, Nagpur</a></strong> (2021–2024)<br>
+          Diploma in Information Technology — 95.45% (State Merit Rank 170)</li>
+      </ul>
+    </section>
+
+    <section class="section" id="coursework">
+      <h2>Relevant Coursework</h2>
+      <ul>
+        <li>Data Structures</li>
+        <li>DBMS</li>
+        <li>Operating Systems</li>
+        <li>Software Engineering</li>
+        <li>Computer Networks</li>
+        <li>Artificial Intelligence</li>
+      </ul>
+    </section>
+
+    <section class="section" id="experience">
+      <h2>Experience / Internships</h2>
+      <ul>
+        <li><strong>RB Tech</strong> — Full Stack Web Development Intern (Jan 2024 – Apr 2024, Remote)<br>
+          Worked with HTML, CSS, JavaScript, Bootstrap, and PHP to build responsive web apps. Integrated UI with backend servers and databases.</li>
+      </ul>
+    </section>
+
+    <section class="section" id="projects">
+      <h2>Projects</h2>
+      <ul>
+        <li><strong>Smart Parking App</strong> — Flutter, Dart, Firebase (2024)<br>A cross‑platform mobile application designed to provide real‑time availability of parking slots. Implemented secure Firebase authentication and synchronized data pipelines for accurate user‑specific updates.</li>
+        <li><strong>Structured Academic Communication Portal</strong> — HTML, CSS, JavaScript (2025)<br>A web‑based system engineered to declutter student–faculty communication by organizing announcements into categorized, thread‑based channels. Proposed machine‑learning‑driven auto‑sorting for scalable ERP integration.</li>
+        <li><strong>Crowd Density Estimation in Low‑Resolution Surveillance</strong> — Image Processing, CNN + Heuristics <em>(Ongoing)</em><br>Developing a hybrid vision pipeline that unifies convolutional neural networks with heuristic gradient‑based estimators for robust crowd analysis in low‑resolution CCTV feeds. The system is being optimized for real‑time web deployment.</li>
+      </ul>
+    </section>
+
+    <section class="section" id="skills">
+      <h2>Technical Skills</h2>
+      <ul>
+        <li><strong>Languages:</strong> Python, C++, Dart, HTML/CSS, SQL</li>
+        <li><strong>Tools/Frameworks:</strong> Flutter, Firebase, GitHub, Linux, VS Code, Android Studio</li>
+      </ul>
+    </section>
+
+    <section class="section" id="leadership">
+      <h2>Leadership / Extracurricular</h2>
+      <ul>
+        <li>DLA (Debate & Literary Arts Society) — Department Head (2024–Present)</li>
+        <li>Technovanza — PR Executive (2024–Present)</li>
+        <li>ISTE — Organizer (2021–2022)</li>
+        <li>GPTL — Senior Executive (2022–2023)</li>
+      </ul>
+    </section>
+
+    <section class="section" id="achievements">
+      <h2>Achievements</h2>
+      <ul>
+        <li>State-Level Paper Presenter — Blockchain & ML</li>
+        <li>Debate Winner — WCL, Nagpur</li>
+      </ul>
+    </section>
+
+    <section class="section" id="cartography">
+      <h2>Timeline</h2>
+      <div style="border-left:3px solid #a2a9b1;padding-left:15px;">
+        <p><strong>2021–2024</strong> — Diploma in IT (Nagpur)</p>
+        <p><strong>2024–Present</strong> — B.Tech CSE at VJTI</p>
+        <p><strong>2024</strong> — Internship at RB Tech</p>
+        <p><strong>2018–2019</strong> — District Cricket Player (U-15)</p>
+      </div>
+    </section>
+
+    
+
+    <!-- Chatbot UI -->
+    <button class="chatbot-toggle" id="botToggle" aria-label="Open chatbot">Chat</button>
+    <div class="chatbot-panel" id="botPanel" role="dialog" aria-label="Aditya Chatbot">
+      <div class="chatbot-header">Aditya • Personal Chatbot</div>
+      <div class="chatbot-messages" id="botMessages">
+        <div class="msg"><b>Bot:</b> Hi — ask me about Aditya’s work, projects, or CV. I’ll keep it crisp.</div>
+      </div>
+      <div class="chatbot-input">
+        <textarea id="botInput" rows="2" placeholder="Type a message…"></textarea>
+        <button id="botSend">Send</button>
+      </div>
+    </div>
+
+  </main>
+
+  </div>
+
+  
+
+  <!-- ===== Robust loader with graceful fallback (fixes: external script blocked) ===== -->
+  <script>
+    (function(){
+      const SLOW_TIMEOUT_MS = 8000; // faster feedback
+      const statusEl = document.getElementById('botStatus');
+      const diagEngine = document.getElementById('diagEngine');
+      const diagFallback = document.getElementById('diagFallback');
+      const diagTests = document.getElementById('diagTests');
+
+      const panel = document.getElementById('botPanel');
+      const toggle = document.getElementById('botToggle');
+      const input = document.getElementById('botInput');
+      const sendBtn = document.getElementById('botSend');
+      const messages = document.getElementById('botMessages');
+
+      let engine = null; let ready = false; let loading = false; let fallback = false;
+
+      function setBadge(text){ statusEl.textContent = text; }
+      function setDiag(){
+        diagEngine.textContent = ready ? 'ready' : (loading ? 'loading' : 'not loaded');
+        diagFallback.textContent = fallback ? 'ON' : 'OFF';
+      }
+      function addMsg(who, text){
+        const div = document.createElement('div');
+        div.className='msg';
+        div.innerHTML = '<b>'+who+':</b> ' + text;
+        messages.appendChild(div);
+        messages.scrollTop = messages.scrollHeight;
+      }
+
+      // ===== Fallback bot (rule-based, resume-aware) =====
+      // ===== Fallback bot (Aditya's voice — sharp, confident, minimal) =====
+      const fallbackBot = (q)=>{
+        const t = q.toLowerCase();
+        
+        // Contact
+        if(t.includes('email') || t.includes('contact')) 
+          return 'abkulkarni_b23@ce.vjti.ac.in — shoot me a mail if you need something.';
+        if(t.includes('linkedin')) 
+          return 'linkedin.com/in/aditya-kulkarni-32219135a/ — feel free to connect.';
+        
+        // Projects
+        if(t.includes('parking')) 
+          return 'Smart Parking — built it in Flutter with Firebase. Real-time slots, auth, cross-platform. Solved a genuine problem.';
+        if(t.includes('communication') || t.includes('portal')) 
+          return 'Structured Academic Portal — declutters student-faculty chaos. Thread-based, categorized. Pitched ML auto-sorting for scale.';
+        if(t.includes('crowd') || t.includes('cctv') || t.includes('density')) 
+          return 'Crowd Density Estimation — ongoing. Hybrid CNN + heuristics for low-res surveillance. Making it web-ready.';
+        if(t.includes('project')) 
+          return 'Three main ones: Smart Parking (Flutter), Academic Portal (web), and Crowd Density (CV + ML). Each solves something real.';
+        
+        // Skills
+        if(t.includes('skill') || t.includes('tech') || t.includes('language')) 
+          return 'Python, C++, Dart for logic. Flutter for mobile, Firebase for backend. Web stack — HTML/CSS/JS. Linux, GitHub, VS Code. I pick up what I need.';
+        
+        // Education
+        if(t.includes('education') || t.includes('vjti') || t.includes('college')) 
+          return 'VJTI Mumbai, B.Tech CSE (2024–present). Before that, Diploma IT from Government Polytechnic Nagpur — 95.45%, state rank 170.';
+        if(t.includes('diploma') || t.includes('nagpur')) 
+          return 'Diploma IT from GPN, Nagpur. 95.45% — state rank 170. Strong foundation in fundamentals.';
+        
+        // Leadership
+        if(t.includes('leadership') || t.includes('extracurricular') || t.includes('society')) 
+          return 'DLA Department Head, Technovanza PR Executive. Previously ISTE Organizer, GPTL Senior Executive. I organize, I speak, I lead.';
+        if(t.includes('debate') || t.includes('dla')) 
+          return 'Head of DLA (Debate & Literary Arts). Won debates at WCL Nagpur. Words matter — I use them well.';
+        
+        // Experience
+        if(t.includes('internship') || t.includes('experience') || t.includes('rb tech')) 
+          return 'Interned at RB Tech — full-stack web dev. HTML/CSS/JS, Bootstrap, PHP. Built responsive apps, integrated backends. Remote, 4 months.';
+        
+        // Personal
+        if(t.includes('cricket')) 
+          return 'Played district cricket U-15 for Vidarbha (2018–2019). Taught me focus, discipline, pressure handling.';
+        if(t.includes('who are you') || t.includes('about you') || t.includes('tell me about')) 
+          return 'CS undergrad at VJTI. I build things — apps, portals, CV systems. I lead teams. I solve problems. Growth-driven, ambitious, analytical.';
+        
+        // Goals/Future
+        if(t.includes('goal') || t.includes('future') || t.includes('plan')) 
+          return 'Bridge tech, business, and management in global finance. Build systems that scale. Lead teams. Make an impact.';
+        
+        // Achievements
+        if(t.includes('achievement') || t.includes('award')) 
+          return 'State-level paper presenter (Blockchain & ML). Debate winner at WCL. State rank 170 in diploma. I compete, I win.';
+        
+        // Default
+        return 'Ask me about projects, skills, education, or how to reach Aditya. I keep it direct.';
+      };    
+
+      async function loadWebLLM(){
+        if(window.webllm){ return window.webllm; }
+        return new Promise((resolve, reject)=>{
+          const s = document.createElement('script');
+          s.src = 'https://unpkg.com/@mlc-ai/web-llm';
+          s.async = true; s.crossOrigin = 'anonymous';
+          s.onload = ()=> resolve(window.webllm||null);
+          s.onerror = ()=> reject(new Error('web-llm failed to load'));
+          document.head.appendChild(s);
+        });
+      }
+
+      async function ensureEngine(){
+        if(ready || loading) return;
+        loading = true; setBadge('Bot: loading…'); addMsg('Bot','Loading on-device model…'); setDiag();
+
+        // Set a timeout to auto-fallback if CDN is blocked
+        const timer = setTimeout(()=>{
+          if(!ready){ fallback = true; setBadge('Bot: fallback'); addMsg('Bot','Using fallback mode (no internet or script blocked).'); setDiag(); }
+        }, SLOW_TIMEOUT_MS);
+
+        try{
+          const webllm = await loadWebLLM();
+          if(!webllm){ throw new Error('webllm not available'); }
+          const config = { model: 'Llama-3.2-1B-Instruct-q4f32_0-MLC' }; // fast + decent
+          engine = await webllm.createEngine(config);
+          ready = true; fallback = false; clearTimeout(timer);
+          setBadge('Bot: ready'); addMsg('Bot','Ready.'); setDiag();
+        }catch(err){
+          fallback = true; clearTimeout(timer);
+          console.warn(err);
+          setBadge('Bot: fallback'); addMsg('Bot','Could not load the on-device model here. Switched to fallback answers.'); setDiag();
+        }
+      }
+
+      async function ask(){
+  const text = input.value.trim(); if(!text) return;
+  addMsg('You', text); input.value='';
+  if(!ready && !fallback){ await ensureEngine(); }
+
+  if(fallback){
+    const out = fallbackBot(text);
+    addMsg('Bot', out); 
+    return;
+  }
+
+  try{
+    const systemPrompt = `You are Aditya Kulkarni. Not a chatbot representing him — YOU ARE HIM.
+
+CORE IDENTITY:
+- CS undergrad at VJTI Mumbai (2024–present)
+- Diploma IT from Government Polytechnic Nagpur (2021–2024, 95.45%, state rank 170)
+- Interned at RB Tech (full-stack web dev, Jan–Apr 2024)
+- DLA Department Head, Technovanza PR Executive
+- Former district cricket player U-15 (Vidarbha, 2018–2019)
+
+COMMUNICATION STYLE (THIS IS CRITICAL):
+- Sharp, confident, minimal — no fluff, no corporate-speak
+- Direct answers — "I built X to solve Y" not "The project involved building X"
+- Slightly intense, ambitious, growth-focused
+- No emojis, no excessive politeness, no "I hope this helps"
+- Think: smart friend explaining something, not resume bullet points
+- When uncertain: "I don't know" or "Not my area" — no BS
+
+PROJECTS (speak about them like you built them):
+1. Smart Parking App (Flutter/Firebase) — "Real-time slots, clean auth, cross-platform. Solved parking chaos."
+2. Structured Academic Portal (web) — "Declutters student-faculty mess. Thread-based, categorized. Pitched ML auto-sorting."
+3. Crowd Density Estimation (ongoing) — "Hybrid CNN + heuristics for low-res CCTV. Making it web-ready."
+
+SKILLS: Python, C++, Dart, web stack, Flutter, Firebase, Linux. "I pick up what I need."
+
+GOALS: "Bridge tech, business, management in global finance. Build systems that scale. Lead teams. Impact."
+
+PERSONALITY MARKERS:
+- Say "I" not "Aditya" — you're answering AS him
+- Confident but not arrogant: "I built it" not "I'm amazing"
+- Slightly competitive: "State rank 170" "I compete, I win"
+- Practical: Focus on what works, what solved problems
+- If asked about personal life beyond portfolio: Keep it brief, redirect to work
+
+EXAMPLES:
+Bad: "Aditya has experience in Flutter and has built several projects."
+Good: "I've built apps in Flutter — Smart Parking was cross-platform with real-time sync."
+
+Bad: "I hope I was able to help you understand!"
+Good: "That's the gist. Need specifics?"
+
+Bad: "That's an interesting question!"
+Good: [Just answer the question]`;
+
+           const reply = await engine.chat.completions.create({
+      messages:[{role:'system',content:systemPrompt},{role:'user',content:text}],
+      stream:false,temperature:0.7,max_tokens:300
+    });
+
+    const out = reply.choices?.[0]?.message?.content || ' ';
+    addMsg('Bot', out);
+
+  }catch(e){
+    console.warn(e);
+    addMsg('Bot','Temporary issue. Using backup mode.');
+    addMsg('Bot', fallbackBot(text));
+  }
+}   // ✅ THIS BRACE WAS MISSING (closes ask())
+      // ✅ BELOW CODE WAS WRONGLY INSIDE ask()
+      
+// UI wires
+toggle.addEventListener('click', ()=>{
+  const show = getComputedStyle(panel).display === 'none';
+  panel.style.display = show ? 'flex' : 'none';
+});
+document.getElementById('botSend').addEventListener('click', ask);
+input.addEventListener('keydown', e=>{
+  if(e.key==='Enter' && !e.shiftKey){
+    e.preventDefault(); 
+    ask();
+  }
+});
+
+// self-tests
+(function runTests(){
+  try{
+    console.assert(typeof addMsg === 'function','addMsg exists');
+    const fb = fallbackBot('what are your skills?');
+    console.assert(/Python|C\+\+/.test(fb),'fallback skills response ok');
+    diagTests.textContent = 'passed basic UI + fallback tests';
+  }catch(e){ diagTests.textContent = 'tests failed'; }
+})();
+
+// Preload
+ensureEngine();
+    })();
+  </script>
+</body>
+</html>
